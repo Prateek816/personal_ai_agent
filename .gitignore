@@ -2,3 +2,4 @@
 test
 .venv
 credentials.json
+token.json
