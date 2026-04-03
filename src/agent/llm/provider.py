@@ -3,7 +3,7 @@ import logging
 from typing import Any
 from langchain_groq import ChatGroq
 from langchain_google_genai import ChatGoogleGenerativeAI
-from terminal_agent.core.config import LLMConfig
+from core.config import LLMConfig
 from .base import BaseProvider, LLMFactory
 
 class GeminiProvider(BaseProvider):

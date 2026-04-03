@@ -8,10 +8,17 @@ import os
 from dataclasses import dataclass , field
 from typing import Dict, Any , List , Optional
 from pathlib import Path
-
+from enum import Enum
 from dotenv import load_dotenv
 
 load_dotenv()
+
+class LLMProvider(str, Enum):
+    """Enumerates supported Large Language Model providers."""
+
+    
+    GROQ = "groq"
+    GEMINI = "gemini"
 
 @dataclass
 class LLMConfig:
@@ -19,11 +26,18 @@ class LLMConfig:
     Configuration class for the Language Model Provider (LLM). 
     This class includes attributes for specifying the provider name, model name, and any additional parameters required for initializing the LLM client.
     """
+    provider : LLMProvider = LLMProvider(os.getenv("LLM_Provider", "groq"))
+    model : str = os.getenv("LLM_MODEL", "llama-3.1-8b-instant")
+    groq_api_key : Optional[str] = os.getenv("GROQ_API_KEY")
+    google_api_key : Optional[str] = os.getenv("GOOGLE_API_KEY")
+    temperature : float = float(os.getenv("LLM_TEMPERATURE", "0.3"))
+    max_tokens : int = int(os.getenv("LLM_MAX_TOKENS", "512"))
+    
 
 @dataclass
-class AgentConfig:
-
-    llm: LLMConfig = field(default_factory=LLMConfig)
+class AppConfig:
+    
+    llm: LLMConfig = field(default_factory=LLMConfig) # making it immutable by default
     @classmethod
     def from_env(cls) -> "AppConfig":
         """Construct an AppConfig instance from environment variables.
@@ -33,9 +47,5 @@ class AgentConfig:
             the current process environment.
         """
         return cls()
-
-    @property
-    def system_prompt(self) -> str:
-        """Expose the system prompt derived from the active policy."""
-        return self.shell_policy.system_prompt
+    
      

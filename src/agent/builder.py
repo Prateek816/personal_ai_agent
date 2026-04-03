@@ -22,9 +22,8 @@ from .middleware import (
 from .tools import 
 
 async def build_agent():
-
+    cfg = AgentConfig().from_env()
     llm = get_llm()
-
     tools : list[BaseTool] = []
 
     #Agent Definition
@@ -34,6 +33,13 @@ async def build_agent():
         system_prompt = cfg.system_prompt,
         checkpointer=InMemorySaver(),
         middleware= [
+
+
+            HumanInTheLoopMiddleware(
+                interrupt_on={
+
+                }
+            )
 
         ],
 

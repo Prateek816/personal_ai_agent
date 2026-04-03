@@ -6,3 +6,5 @@ langchain_community
 langchain_google_genai
 dotenv
 pydantic
+bs4
+requests

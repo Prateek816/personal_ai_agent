@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 from typing import Any, Dict, Literal, Type
 
 # Added "groq" and "gemini" to the supported literal types
-PROVIDER_TYPE = Literal["openai", "azure_openai", "groq", "gemini"]
+PROVIDER_TYPE = Literal["groq", "gemini"]
 
 
 class BaseProvider(ABC):
