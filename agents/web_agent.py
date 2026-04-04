@@ -69,7 +69,7 @@ def web_agent(state: MessagesState) -> Command[Literal["supervisor"]]:
     search_query = f"{state['messages'][-1].content if state['messages'] else 'general topic'} latest information facts"
     
     # Perform web search
-    search_results = web_search.invoke(search_query)
+    search_results = web_search.invoke(search_query)['answer']
     
     # Summarize results
     summary_prompt = (

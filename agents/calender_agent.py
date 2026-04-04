@@ -23,7 +23,9 @@ credentials = get_google_credentials(
     scopes=["https://www.googleapis.com/auth/calendar"],
     client_secrets_file="credentials.json",
 )
-
+api_resource = build_calendar_service(credentials=credentials)
+toolkit = CalendarToolkit(api_resource=api_resource)
+tools = toolkit.get_tools()
 llm = ChatGroq(model = "openai/gpt-oss-120b",api_key=os.getenv("GROQ_API_KEY"))
 
 def calendar_agent(state:MessagesState):
